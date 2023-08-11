@@ -1,0 +1,112 @@
+<h1>Reactive Form</h1>
+
+<div class="container">
+    <div class="form-area">
+        <form [formGroup]="form" (ngSubmit)="onsumbit()">
+            <div class="form-group">
+                <label >Full name</label>
+                <input type="text" name="fullname" class="form-control" placeholder="Fullname..."
+                formControlName="fullName">
+              
+
+                <div class="alert alert-danger"  *ngIf="fc.fullName.touched && fc.fullName.invalid">
+                <div *ngIf="fc.fullName.errors?.['required']">Full name is Required</div>
+                    <div *ngIf="fc.fullName.errors?.['minlength']">Full name should be atleast 6 letters</div>
+                    <div *ngIf="fc.fullName.errors?.nospacevalidators"> Full name cannot contain spaces </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label >Email</label>
+                <input type="email" name="email" class="form-control" placeholder="Email..."
+                formControlName="email">
+              
+
+                <div class="alert alert-danger"  *ngIf="fc.email.touched && fc.email.invalid">
+                <div *ngIf="fc.email.errors?.['required']"> Email is Required</div>
+                    <div *ngIf="fc.email.errors?.['pattern']">Invalid Email Format</div>
+                </div>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label >Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Password..."
+                formControlName="password">
+              
+
+                <div class="alert alert-danger"  *ngIf="fc.password.touched && fc.password.invalid">
+                <div *ngIf="fc.password.errors?.['required']"> Password is Required</div>
+                    <div *ngIf="fc.password.errors?.['pattern']">Invalid Password Format</div>
+                </div>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label >Gender</label>
+                <br>
+                <div class="form-check">
+                <label class="radio-inline">
+                    <input type="radio" name="gender" value="male" formControlName="gender" >
+                    Male
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="radio-inline">
+                    <input type="radio" name="gender" value="female" formControlName="gender"  >
+                    Female
+                  </label>
+                </div>
+                  
+            </div>
+            <br><br>
+            <div class="form-group" >
+                <label >Courses</label>
+                <select name="course" id="courses"  class="form-control" name="course" formControlName="courses" >
+                 <option value="css">css</option>
+                 <option value="html">html</option>
+                 <option value="js">js</option>
+                 <option value="angular">angular</option>
+                 <option value="reactjs">reactjs</option>
+                 <option value="nodejs">nodejs</option>
+                </select>
+                <div *ngIf="fc.courses.errors?.['required']">
+                 <div class="alert alert-danger" *ngIf="fc.courses.touched && fc.courses.invalid">please select any one course
+                 </div> 
+                </div>
+          </div>
+          <br><br>
+          <div class="form-group">
+            <label >Skills</label>
+            <input type="text" placeholder="Add Skills..." class="form-control" name="skill" #skills formControlName="skills" (keyup.enter)="adding($event)">
+           
+            <div>
+              <ul *ngFor="let obj of skillsArr; let i = index" class="list-group">
+                <li class="list-group-item">
+                  {{obj}}
+                  <a href="" class="btn btn-sm btn-danger" (click)="remove(i)">X</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <br><br>
+          <div class="form-group">
+            <label > Captcha 6x6 = ?</label>
+            <input type="text" name="captcha" class="form-control"  formControlName="captcha">
+            <div class="alert alert-danger" *ngIf="fc.captcha.touched && fc.captcha.invalid">
+              <span *ngIf="fc.captcha.errors?.['required']">Please enter the captcha value.</span>
+            </div>
+              <div class="alert alert-danger" *ngIf="fc.captcha.value!=='36' && fc.captcha.valid">Enter Valid Captcha</div>
+            
+            </div>
+            <br><br>
+            <div class="form-group">
+              <label >Terms & Conditions</label>
+              <br>
+              <input type="checkbox" name="agree" formControlName="agree">Agree
+             
+            </div>
+
+            <button class="btn btn-primary" [disabled]="fc.captcha.value!=='36' || form.invalid">Sumbit</button>
+        </form>
+
+    </div>
+</div>
